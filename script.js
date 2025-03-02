@@ -10,8 +10,8 @@ const totalDisplay = document.getElementById("display-total");
 const totalCostDisplay = document.getElementById("total-cost");
 const calculateTotalBtn = document.getElementById("calculate-total-btn");
 
-// Initialize purchase array. TODO: instead retrieve saved array from localStorage
-let purchaseArr = [];
+// Initialize purchase array
+const purchaseArr = JSON.parse(localStorage.getItem("purchaseData")) || [];
 
 // Ensure there are no special characters in input
 const isValidInput = (str) => {
@@ -103,7 +103,7 @@ const addPurchase = () => {
     paymentMethod: paymentMethodInput.value,
   };
   purchaseArr.push(newPurchase);
-  console.log(newPurchase);
+  localStorage.setItem("purchaseData", JSON.stringify(purchaseArr));
   updateDisplay();
 };
 
@@ -135,9 +135,14 @@ const updateDisplay = () => {
 };
 
 const clearPurchases = () => {
-  purchaseArr = [];
+  purchaseArr.length = 0;
+  localStorage.setItem("purchaseData", JSON.stringify(purchaseArr));
   updateDisplay();
 };
+
+if (purchaseArr.length) {
+  updateDisplay();
+}
 
 // Button event listeners
 sortDropdown.addEventListener("change", sortPurchases);
