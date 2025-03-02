@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Financial Tracker</title>
+  </head>
+  <body>
+    <h1>Financial Tracker</h1>
+    <form>
+      <div>
+        <label for="purchase-name">Purchase:</label>
+        <input
+          type="text"
+          id="purchase-name"
+          name="purchase-name"
+          placeholder="shoes"
+          required
+        />
+      </div>
+      <div>
+        <label for="cost">Cost:</label>
+        <input
+          type="number"
+          id="cost"
+          name="cost"
+          step="0.01"
+          min="0.01"
+          placeholder="0.01"
+          required
+        />
+      </div>
+      <div>
+        <label for="purchase-date">Date:</label>
+        <input type="date" id="purchase-date" name="purchase-date" required />
+      </div>
+      <div>
+        <label for="payment-method">Payment Method:</label>
+        <input
+          type="text"
+          id="payment-method"
+          name="payment-method"
+          placeholder="cash"
+          required
+        />
+      </div>
+      <button type="button" id="clear-btn">Clear</button>
+      <button type="submit" id="submit-btn">Submit</button>
+    </form>
+    <div>
+      <label for="sort-dropdown">Sort</label>
+      <select id="sort-dropdown" name="sort-dropdown">
+        <option value="">---</option>
+        <option value="name">Name: A-Z</option>
+        <option value="low-high">Price: Low-High</option>
+        <option value="high-low">Price: High-Low</option>
+        <option value="most-recent">Most Recent</option>
+        <option value="payment">Payment Method</option>
+      </select>
+    </div>
+    <div id="display-total"></div>
+    <button type="button" id="calculate-total-btn">
+      Calculate Total Spent
+    </button>
+    <div id="total-cost"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
