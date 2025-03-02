@@ -24,67 +24,49 @@ const inputExists = (str) => {
   return str.length >= 1;
 };
 
-// Sorting methods. TODO: refactor and simplify methods for readability
+// Sorting methods
 const sortByName = (arr) => {
   arr.sort((a, b) => {
-    if (a.name < b.name) {
-      return -1;
-    } else if (a.name > b.name) {
-      return 1;
-    } else {
-      return 0;
-    }
+    return a.name < b.name ? -1 : 1 || 0;
   });
 };
 
 const sortByCost = (arr, dir) => {
   arr.sort((a, b) => {
-    if (Number(a.cost) < Number(b.cost)) {
-      return dir === "low-high" ? -1 : 1;
-    } else if (Number(a.cost) > Number(b.cost)) {
-      return dir === "low-high" ? 1 : -1;
+    if (dir === "low-high") {
+      return Number(a.cost) < Number(b.cost) ? -1 : 1 || 0;
     } else {
-      return 0;
+      return Number(a.cost) > Number(b.cost) ? -1 : 1 || 0;
     }
   });
 };
 
 const sortByDate = (arr) => {
   arr.sort((a, b) => {
-    if (a.dateAsNumber < b.dateAsNumber) {
-      return 1;
-    } else if (a.dateAsNumber > b.dateAsNumber) {
-      return -1;
-    } else {
-      return 0;
-    }
+    return a.dateAsNumber < b.dateAsNumber ? -1 : 1 || 0;
   });
 };
 
 const sortByPaymentMethod = (arr) => {
   arr.sort((a, b) => {
-    if (a.paymentMethod < b.paymentMethod) {
-      return -1;
-    } else if (a.paymentMethod > b.paymentMethod) {
-      return 1;
-    } else {
-      return 0;
-    }
+    return a.paymentMethod < b.paymentMethod ? -1 : 1 || 0;
   });
 };
 
 const sortPurchases = () => {
-  if (sortDropdown.value === "name") {
-    sortByName(purchaseArr);
-  } else if (
-    sortDropdown.value === "low-high" ||
-    sortDropdown.value === "high-low"
-  ) {
-    sortByCost(purchaseArr, sortDropdown.value);
-  } else if (sortDropdown.value === "most-recent") {
-    sortByDate(purchaseArr);
-  } else if (sortDropdown.value === "payment") {
-    sortByPaymentMethod(purchaseArr);
+  switch (sortDropdown.value) {
+    case "name":
+      sortByName(purchaseArr);
+      break;
+    case "low-high" || "high-low":
+      sortByCost(purchaseArr, sortDropdown.value);
+      break;
+    case "most-recent":
+      sortByDate(purchaseArr);
+      break;
+    case "payment":
+      sortByPaymentMethod(purchaseArr);
+      break;
   }
   updateDisplay();
 };
@@ -113,6 +95,7 @@ const addPurchase = () => {
     return;
   }
   const newPurchase = {
+    id: `${nameInput.value}-${dateInput.valueAsNumber}`,
     name: nameInput.value,
     cost: costInput.value,
     date: dateInput.value,
@@ -129,7 +112,6 @@ const updateDisplay = () => {
   costInput.value = "";
   dateInput.value = "";
   paymentMethodInput.value = "";
-  sortDropdown.value = "";
   totalCostDisplay.innerHTML = "";
   totalDisplay.innerHTML = "";
   totalDisplay.innerHTML += purchaseArr
