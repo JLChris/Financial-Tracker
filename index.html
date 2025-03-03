@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>Financial Tracker</h1>
-    <form>
+    <form id="enter-purchase-form">
       <div>
         <label for="purchase-name">Purchase:</label>
         <input
@@ -48,7 +48,7 @@
       <button type="button" id="clear-btn">Clear</button>
       <button type="submit" id="submit-btn">Submit</button>
     </form>
-    <div>
+    <div id="sort-container">
       <label for="sort-dropdown">Sort</label>
       <select id="sort-dropdown" name="sort-dropdown">
         <option value="">---</option>
@@ -59,7 +59,7 @@
         <option value="payment">Payment Method</option>
       </select>
     </div>
-    <div>
+    <div id="filter-container">
       <label for="filter-dropdown">Filter</label>
       <select id="filter-dropdown" name="filter-dropdown">
         <option value="all">All</option>
@@ -87,11 +87,14 @@
       </div>
       <button type="button" id="filter-btn">Filter</button>
     </div>
-    <div id="display-total"></div>
-    <button type="button" id="calculate-total-btn">
-      Calculate Total Spent
-    </button>
-    <div id="total-cost"></div>
+    <div id="purchases-container">
+      <div id="purchase-display"></div>
+      <button type="button" id="calculate-total-btn">
+        Calculate Total Spent
+      </button>
+      <div id="total-cost"></div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>

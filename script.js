@@ -11,7 +11,7 @@ const choosePaymentMethodInput = document.getElementById(
   "choose-payment-method"
 );
 const chooseCostInput = document.getElementById("choose-cost");
-const totalDisplay = document.getElementById("display-total");
+const purchaseDisplay = document.getElementById("purchase-display");
 const totalCostDisplay = document.getElementById("total-cost");
 const calculateTotalBtn = document.getElementById("calculate-total-btn");
 const filterBtn = document.getElementById("filter-btn");
@@ -149,8 +149,8 @@ const updateDisplay = () => {
   dateInput.value = "";
   paymentMethodInput.value = "";
   totalCostDisplay.innerHTML = "";
-  totalDisplay.innerHTML = "";
-  totalDisplay.innerHTML += filterDisplay(filterDropdown.value)
+  purchaseDisplay.innerHTML = "";
+  purchaseDisplay.innerHTML += filterDisplay(filterDropdown.value)
     .map((p) => {
       return `
               <ul>

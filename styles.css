@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+}
+
+#enter-purchase-form {
+  border: 2px solid black;
+  margin: 20px;
+  padding: 10px;
+}
+
+#sort-container {
+  border: 2px solid darkblue;
+  margin: 20px;
+  padding: 10px;
+}
+
+#filter-container {
+  border: 2px solid darkgreen;
+  margin: 20px;
+  padding: 10px;
+}
+
+#purchases-container {
+  border: 2px solid darkred;
+  margin: 20px;
+  padding: 10px;
+}
