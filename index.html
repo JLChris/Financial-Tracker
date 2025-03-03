@@ -59,6 +59,34 @@
         <option value="payment">Payment Method</option>
       </select>
     </div>
+    <div>
+      <label for="filter-dropdown">Filter</label>
+      <select id="filter-dropdown" name="filter-dropdown">
+        <option value="all">All</option>
+        <option value="payment-method">Payment Method</option>
+        <option value="cost-max">Maximum Cost</option>
+        <option value="cost-min">Minimum Cost</option>
+      </select>
+      <div>
+        <label for="choose-payment-method">Choose Payment Method:</label>
+        <input
+          type="text"
+          id="choose-payment-method"
+          name="choose-payment-method"
+        />
+      </div>
+      <div>
+        <label for="choose-cost">Choose Cost:</label>
+        <input
+          type="number"
+          id="choose-cost"
+          name="choose-cost"
+          step="0.01"
+          min="0.01"
+        />
+      </div>
+      <button type="button" id="filter-btn">Filter</button>
+    </div>
     <div id="display-total"></div>
     <button type="button" id="calculate-total-btn">
       Calculate Total Spent

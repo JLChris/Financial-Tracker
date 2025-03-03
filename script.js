@@ -6,9 +6,15 @@ const paymentMethodInput = document.getElementById("payment-method");
 const clearBtn = document.getElementById("clear-btn");
 const submitBtn = document.getElementById("submit-btn");
 const sortDropdown = document.getElementById("sort-dropdown");
+const filterDropdown = document.getElementById("filter-dropdown");
+const choosePaymentMethodInput = document.getElementById(
+  "choose-payment-method"
+);
+const chooseCostInput = document.getElementById("choose-cost");
 const totalDisplay = document.getElementById("display-total");
 const totalCostDisplay = document.getElementById("total-cost");
 const calculateTotalBtn = document.getElementById("calculate-total-btn");
+const filterBtn = document.getElementById("filter-btn");
 
 // Initialize purchase array
 const purchaseArr = JSON.parse(localStorage.getItem("purchaseData")) || [];
@@ -17,6 +23,11 @@ const purchaseArr = JSON.parse(localStorage.getItem("purchaseData")) || [];
 const isValidInput = (str) => {
   const regex = /[^0-9a-zA-Z\s]/g;
   return !str.match(regex);
+};
+
+const isValidDate = (date) => {
+  const today = new Date();
+  return today.getTime() >= date.valueAsNumber;
 };
 
 // Ensure fields are populated
@@ -84,8 +95,8 @@ const addPurchase = () => {
   } else if (!inputExists(costInput.value)) {
     alert("Please enter a cost");
     return;
-  } else if (!inputExists(dateInput.value)) {
-    alert("Please enter a date");
+  } else if (!inputExists(dateInput.value) || !isValidDate(dateInput)) {
+    alert("Please enter a valid date");
     return;
   } else if (
     !isValidInput(paymentMethodInput.value) ||
@@ -107,6 +118,31 @@ const addPurchase = () => {
   updateDisplay();
 };
 
+const filterDisplay = (p) => {
+  let dataToDisplay;
+  switch (p) {
+    case "all":
+      dataToDisplay = [...purchaseArr];
+      break;
+    case "payment-method":
+      dataToDisplay = purchaseArr.filter(
+        ({ paymentMethod }) => paymentMethod === choosePaymentMethodInput.value
+      );
+      break;
+    case "cost-max":
+      dataToDisplay = purchaseArr.filter(
+        ({ cost }) => Number(cost) <= Number(chooseCostInput.value)
+      );
+      break;
+    case "cost-min":
+      dataToDisplay = purchaseArr.filter(
+        ({ cost }) => Number(cost) >= Number(chooseCostInput.value)
+      );
+      break;
+  }
+  return dataToDisplay;
+};
+
 const updateDisplay = () => {
   nameInput.value = "";
   costInput.value = "";
@@ -114,7 +150,7 @@ const updateDisplay = () => {
   paymentMethodInput.value = "";
   totalCostDisplay.innerHTML = "";
   totalDisplay.innerHTML = "";
-  totalDisplay.innerHTML += purchaseArr
+  totalDisplay.innerHTML += filterDisplay(filterDropdown.value)
     .map((p) => {
       return `
               <ul>
@@ -135,6 +171,8 @@ const updateDisplay = () => {
 };
 
 const clearPurchases = () => {
+  chooseCostInput.value = "";
+  choosePaymentMethodInput.value = "";
   purchaseArr.length = 0;
   localStorage.setItem("purchaseData", JSON.stringify(purchaseArr));
   updateDisplay();
@@ -147,6 +185,8 @@ if (purchaseArr.length) {
 // Button event listeners
 sortDropdown.addEventListener("change", sortPurchases);
 
+filterBtn.addEventListener("click", updateDisplay);
+
 clearBtn.addEventListener("click", clearPurchases);
 
 calculateTotalBtn.addEventListener("click", calculateTotalCost);
@@ -156,7 +196,5 @@ submitBtn.addEventListener("click", (e) => {
   addPurchase();
 });
 
-// TODO: add functionality to filter list by cost, date, or payment method
 // TODO: add section to track money earned
-// TODO: add form validation to ensure user can't input a future date
 // TODO: add functionality to calculate total money earned so far this month
