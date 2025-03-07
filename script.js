@@ -105,8 +105,12 @@ const addPurchase = () => {
     alert("Please enter a valid payment method");
     return;
   }
+  const regex = /\s/g;
+  const newId = `${nameInput.value.replace(regex, "-")}-${
+    dateInput.valueAsNumber
+  }`;
   const newPurchase = {
-    id: `${nameInput.value}-${dateInput.valueAsNumber}`,
+    id: dateInput.valueAsNumber,
     name: nameInput.value,
     cost: costInput.value,
     date: dateInput.value,
@@ -143,6 +147,15 @@ const filterDisplay = (p) => {
   return dataToDisplay;
 };
 
+const deletePurchase = (id) => {
+  console.log(id);
+  const purchaseToDelete = purchaseArr.findIndex((p) => p.id === id);
+  console.log(purchaseToDelete);
+  purchaseArr.splice(purchaseToDelete, 1);
+  localStorage.setItem("purchaseData", JSON.stringify(purchaseArr));
+  updateDisplay();
+};
+
 const updateDisplay = () => {
   nameInput.value = "";
   costInput.value = "";
@@ -153,18 +166,23 @@ const updateDisplay = () => {
   purchaseDisplay.innerHTML += filterDisplay(filterDropdown.value)
     .map((p) => {
       return `
-              <ul>
-                  <li>Purchase: ${p.name}</li>
-                  <li>Cost: $${
-                    p.cost.length === 1
-                      ? p.cost + ".00"
-                      : p.cost.length === 3
-                      ? p.cost + "0"
-                      : p.cost
-                  }</li>
-                  <li>Date: ${p.date}</li>
-                  <li>Payment Method: ${p.paymentMethod}</li>
-              </ul>
+              <div>
+                <ul>
+                    <li>Purchase: ${p.name}</li>
+                    <li>Cost: $${
+                      p.cost.length === 1
+                        ? p.cost + ".00"
+                        : p.cost.length === 3
+                        ? p.cost + "0"
+                        : p.cost
+                    }</li>
+                    <li>Date: ${p.date}</li>
+                    <li>Payment Method: ${p.paymentMethod}</li>
+                </ul>
+                <button type="button" onclick="deletePurchase(${
+                  p.id
+                })">Delete</button>
+              </div>
           `;
     })
     .join("");
