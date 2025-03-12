@@ -8,91 +8,94 @@
   </head>
   <body>
     <h1>Financial Tracker</h1>
-    <form id="enter-purchase-form">
-      <div>
-        <label for="purchase-name">Purchase:</label>
-        <input
-          type="text"
-          id="purchase-name"
-          name="purchase-name"
-          placeholder="shoes"
-          required
-        />
+    <div id="money-going-out">
+      <h2>Money Going Out</h2>
+      <form id="enter-purchase-form">
+        <div>
+          <label for="purchase-name">Purchase:</label>
+          <input
+            type="text"
+            id="purchase-name"
+            name="purchase-name"
+            placeholder="shoes"
+            required
+          />
+        </div>
+        <div>
+          <label for="cost">Cost:</label>
+          <input
+            type="number"
+            id="cost"
+            name="cost"
+            step="0.01"
+            min="0.01"
+            placeholder="0.01"
+            required
+          />
+        </div>
+        <div>
+          <label for="purchase-date">Date:</label>
+          <input type="date" id="purchase-date" name="purchase-date" required />
+        </div>
+        <div>
+          <label for="payment-method">Payment Method:</label>
+          <input
+            type="text"
+            id="payment-method"
+            name="payment-method"
+            placeholder="cash"
+            required
+          />
+        </div>
+        <button type="button" id="clear-purchases-btn">Clear</button>
+        <button type="submit" id="submit-purchase-btn">Submit</button>
+      </form>
+      <div id="sort-container">
+        <label for="sort-dropdown">Sort</label>
+        <select id="sort-dropdown" name="sort-dropdown">
+          <option value="">---</option>
+          <option value="name">Name: A-Z</option>
+          <option value="low-high">Price: Low-High</option>
+          <option value="high-low">Price: High-Low</option>
+          <option value="most-recent">Most Recent</option>
+          <option value="payment">Payment Method</option>
+        </select>
       </div>
-      <div>
-        <label for="cost">Cost:</label>
-        <input
-          type="number"
-          id="cost"
-          name="cost"
-          step="0.01"
-          min="0.01"
-          placeholder="0.01"
-          required
-        />
+      <div id="filter-container">
+        <label for="filter-dropdown">Filter</label>
+        <select id="filter-dropdown" name="filter-dropdown">
+          <option value="all">All</option>
+          <option value="payment-method">Payment Method</option>
+          <option value="cost-max">Maximum Cost</option>
+          <option value="cost-min">Minimum Cost</option>
+        </select>
+        <div>
+          <label for="choose-payment-method">Choose Payment Method:</label>
+          <input
+            type="text"
+            id="choose-payment-method"
+            name="choose-payment-method"
+          />
+        </div>
+        <div>
+          <label for="choose-cost">Choose Cost:</label>
+          <input
+            type="number"
+            id="choose-cost"
+            name="choose-cost"
+            step="0.01"
+            min="0.01"
+          />
+        </div>
+        <button type="button" id="filter-btn">Filter</button>
       </div>
-      <div>
-        <label for="purchase-date">Date:</label>
-        <input type="date" id="purchase-date" name="purchase-date" required />
+      <div id="purchases-container">
+        <div id="purchase-display"></div>
+        <button type="button" id="calculate-total-btn">
+          Calculate Total Spent
+        </button>
+        <div id="total-cost"></div>
       </div>
-      <div>
-        <label for="payment-method">Payment Method:</label>
-        <input
-          type="text"
-          id="payment-method"
-          name="payment-method"
-          placeholder="cash"
-          required
-        />
-      </div>
-      <button type="button" id="clear-btn">Clear</button>
-      <button type="submit" id="submit-btn">Submit</button>
-    </form>
-    <div id="sort-container">
-      <label for="sort-dropdown">Sort</label>
-      <select id="sort-dropdown" name="sort-dropdown">
-        <option value="">---</option>
-        <option value="name">Name: A-Z</option>
-        <option value="low-high">Price: Low-High</option>
-        <option value="high-low">Price: High-Low</option>
-        <option value="most-recent">Most Recent</option>
-        <option value="payment">Payment Method</option>
-      </select>
-    </div>
-    <div id="filter-container">
-      <label for="filter-dropdown">Filter</label>
-      <select id="filter-dropdown" name="filter-dropdown">
-        <option value="all">All</option>
-        <option value="payment-method">Payment Method</option>
-        <option value="cost-max">Maximum Cost</option>
-        <option value="cost-min">Minimum Cost</option>
-      </select>
-      <div>
-        <label for="choose-payment-method">Choose Payment Method:</label>
-        <input
-          type="text"
-          id="choose-payment-method"
-          name="choose-payment-method"
-        />
-      </div>
-      <div>
-        <label for="choose-cost">Choose Cost:</label>
-        <input
-          type="number"
-          id="choose-cost"
-          name="choose-cost"
-          step="0.01"
-          min="0.01"
-        />
-      </div>
-      <button type="button" id="filter-btn">Filter</button>
-    </div>
-    <div id="purchases-container">
-      <div id="purchase-display"></div>
-      <button type="button" id="calculate-total-btn">
-        Calculate Total Spent
-      </button>
-      <div id="total-cost"></div>
     </div>
 
     <script src="script.js"></script>

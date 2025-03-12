@@ -3,8 +3,8 @@ const nameInput = document.getElementById("purchase-name");
 const costInput = document.getElementById("cost");
 const dateInput = document.getElementById("purchase-date");
 const paymentMethodInput = document.getElementById("payment-method");
-const clearBtn = document.getElementById("clear-btn");
-const submitBtn = document.getElementById("submit-btn");
+const clearPurchasesBtn = document.getElementById("clear-purchases-btn");
+const submitPurchaseBtn = document.getElementById("submit-purchase-btn");
 const sortDropdown = document.getElementById("sort-dropdown");
 const filterDropdown = document.getElementById("filter-dropdown");
 const choosePaymentMethodInput = document.getElementById(
@@ -28,6 +28,15 @@ const isValidInput = (str) => {
 const isValidDate = (date) => {
   const today = new Date();
   return today.getTime() >= date.valueAsNumber;
+};
+
+const reformatDate = (str) => {
+  const dateArr = str.split("-");
+  const day = dateArr.pop();
+  const month = dateArr.pop();
+  const year = dateArr.pop();
+  const newDate = [month, day, year];
+  return newDate.join("-");
 };
 
 // Ensure fields are populated
@@ -85,7 +94,9 @@ const sortPurchases = () => {
 const calculateTotalCost = () => {
   let total = 0;
   purchaseArr.forEach(({ cost }) => (total += Number(cost)));
-  totalCostDisplay.innerHTML = `<strong>Total Spent: $${total}</strong>`;
+  totalCostDisplay.innerHTML = `<strong>Total Spent: $${total.toFixed(
+    2
+  )}</strong>`;
 };
 
 const addPurchase = () => {
@@ -109,11 +120,12 @@ const addPurchase = () => {
   const newId = `${nameInput.value.replace(regex, "-")}-${
     dateInput.valueAsNumber
   }`;
+  const formattedDate = reformatDate(dateInput.value);
   const newPurchase = {
     id: dateInput.valueAsNumber,
     name: nameInput.value,
     cost: costInput.value,
-    date: dateInput.value,
+    date: formattedDate,
     dateAsNumber: dateInput.valueAsNumber,
     paymentMethod: paymentMethodInput.value,
   };
@@ -205,11 +217,11 @@ sortDropdown.addEventListener("change", sortPurchases);
 
 filterBtn.addEventListener("click", updateDisplay);
 
-clearBtn.addEventListener("click", clearPurchases);
+clearPurchasesBtn.addEventListener("click", clearPurchases);
 
 calculateTotalBtn.addEventListener("click", calculateTotalCost);
 
-submitBtn.addEventListener("click", (e) => {
+submitPurchaseBtn.addEventListener("click", (e) => {
   e.preventDefault();
   addPurchase();
 });
