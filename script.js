@@ -15,6 +15,7 @@ const purchaseDisplay = document.getElementById("purchase-display");
 const totalCostDisplay = document.getElementById("total-cost");
 const calculateTotalBtn = document.getElementById("calculate-total-btn");
 const filterBtn = document.getElementById("filter-btn");
+const purchaseTableBody = document.getElementById("purchase-table-body");
 
 // Initialize purchase array
 const purchaseArr = JSON.parse(localStorage.getItem("purchaseData")) || [];
@@ -174,27 +175,15 @@ const updateDisplay = () => {
   dateInput.value = "";
   paymentMethodInput.value = "";
   totalCostDisplay.innerHTML = "";
-  purchaseDisplay.innerHTML = "";
-  purchaseDisplay.innerHTML += filterDisplay(filterDropdown.value)
+  purchaseTableBody.innerHTML = filterDisplay(filterDropdown.value)
     .map((p) => {
       return `
-              <div>
-                <ul>
-                    <li>Purchase: ${p.name}</li>
-                    <li>Cost: $${
-                      p.cost.length === 1
-                        ? p.cost + ".00"
-                        : p.cost.length === 3
-                        ? p.cost + "0"
-                        : p.cost
-                    }</li>
-                    <li>Date: ${p.date}</li>
-                    <li>Payment Method: ${p.paymentMethod}</li>
-                </ul>
-                <button type="button" onclick="deletePurchase(${
-                  p.id
-                })">Delete</button>
-              </div>
+              <tr>
+                <td>${p.name}</td>
+                <td>$${Number(p.cost).toFixed(2)}</td>
+                <td>${p.date}</td>
+                <td>${p.paymentMethod}</td>
+              </tr>
           `;
     })
     .join("");

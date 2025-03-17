@@ -7,12 +7,11 @@
     <title>Financial Tracker</title>
   </head>
   <body>
-    <h1>Financial Tracker</h1>
-    <div id="money-going-out">
-      <h2>Money Going Out</h2>
+    <nav id="sidebar">
+      <h1>Financial Tracker</h1>
       <form id="enter-purchase-form">
         <div>
-          <label for="purchase-name">Purchase:</label>
+          <label for="purchase-name">Purchase</label>
           <input
             type="text"
             id="purchase-name"
@@ -22,7 +21,7 @@
           />
         </div>
         <div>
-          <label for="cost">Cost:</label>
+          <label for="cost">Cost</label>
           <input
             type="number"
             id="cost"
@@ -34,11 +33,11 @@
           />
         </div>
         <div>
-          <label for="purchase-date">Date:</label>
+          <label for="purchase-date">Date</label>
           <input type="date" id="purchase-date" name="purchase-date" required />
         </div>
         <div>
-          <label for="payment-method">Payment Method:</label>
+          <label for="payment-method">Payment Method</label>
           <input
             type="text"
             id="payment-method"
@@ -47,9 +46,13 @@
             required
           />
         </div>
-        <button type="button" id="clear-purchases-btn">Clear</button>
-        <button type="submit" id="submit-purchase-btn">Submit</button>
+        <div id="form-btns">
+          <button type="button" id="clear-purchases-btn">Clear</button>
+          <button type="submit" id="submit-purchase-btn">Submit</button>
+        </div>
       </form>
+    </nav>
+    <div id="list-actions">
       <div id="sort-container">
         <label for="sort-dropdown">Sort</label>
         <select id="sort-dropdown" name="sort-dropdown">
@@ -62,15 +65,17 @@
         </select>
       </div>
       <div id="filter-container">
-        <label for="filter-dropdown">Filter</label>
-        <select id="filter-dropdown" name="filter-dropdown">
-          <option value="all">All</option>
-          <option value="payment-method">Payment Method</option>
-          <option value="cost-max">Maximum Cost</option>
-          <option value="cost-min">Minimum Cost</option>
-        </select>
         <div>
-          <label for="choose-payment-method">Choose Payment Method:</label>
+          <label for="filter-dropdown">Filter</label>
+          <select id="filter-dropdown" name="filter-dropdown">
+            <option value="all">All</option>
+            <option value="payment-method">Payment Method</option>
+            <option value="cost-max">Maximum Cost</option>
+            <option value="cost-min">Minimum Cost</option>
+          </select>
+        </div>
+        <div>
+          <label for="choose-payment-method">Choose Payment Method</label>
           <input
             type="text"
             id="choose-payment-method"
@@ -78,7 +83,7 @@
           />
         </div>
         <div>
-          <label for="choose-cost">Choose Cost:</label>
+          <label for="choose-cost">Choose Cost</label>
           <input
             type="number"
             id="choose-cost"
@@ -90,11 +95,27 @@
         <button type="button" id="filter-btn">Filter</button>
       </div>
       <div id="purchases-container">
-        <div id="purchase-display"></div>
-        <button type="button" id="calculate-total-btn">
-          Calculate Total Spent
-        </button>
-        <div id="total-cost"></div>
+        <table id="purchase-table">
+          <thead>
+            <tr>
+              <th scope="col">Purchase</th>
+              <th scope="col">Cost</th>
+              <th scope="col">Date</th>
+              <th scope="col">Payment Method</th>
+            </tr>
+          </thead>
+          <tbody id="purchase-table-body"></tbody>
+          <tfoot>
+            <tr>
+              <th>
+                <button type="button" id="calculate-total-btn">
+                  Calculate Total Spent
+                </button>
+              </th>
+              <td id="total-cost"></td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
     </div>
 

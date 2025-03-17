@@ -2,26 +2,105 @@
   box-sizing: border-box;
 }
 
+#sidebar {
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 256px;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+
+  background: #ffffff;
+  border-right: 1px solid #e0e0e0;
+}
+
+h1 {
+  margin: 10px;
+  font-size: 32px;
+  text-align: center;
+}
+
+/* Purchase form styles */
+
+#enter-purchase-form input {
+  width: 75%;
+}
+
+#enter-purchase-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#enter-purchase-form div {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 #enter-purchase-form {
+  margin: 20px;
+  padding: 10px;
+}
+
+#form-btns button {
+  margin: 5px;
+  padding: 5px;
+  letter-spacing: 1px;
+}
+
+#form-btns button:hover {
+  cursor: pointer;
+  transform: translate(-1px, -1px);
+  box-shadow: 1px 1px 1px gray;
+}
+
+/* Purchase list styles */
+
+#purchase-table {
+  padding: 0px;
+  border-collapse: collapse;
+  border: 2px solid rgb(140 140 140);
+  position: absolute;
+  width: 75%;
+  top: 220px;
+  left: 100px;
+}
+
+th,
+td {
+  border: 1px solid rgb(160 160 160);
+  text-align: center;
+  padding: 5px 0 5px 0;
+}
+
+th {
+  background-color: lightgray;
+  border-bottom: 2px solid black;
+}
+
+#list-actions {
   border: 2px solid black;
-  margin: 20px;
-  padding: 10px;
+  position: absolute;
+  display: flex;
+  height: 200px;
+  left: 256px;
+  right: 0px;
+  top: 0px;
+  border-bottom: 2px solid gray;
+  padding: 50px;
 }
 
-#sort-container {
-  border: 2px solid darkblue;
-  margin: 20px;
-  padding: 10px;
-}
-
+#sort-container,
 #filter-container {
-  border: 2px solid darkgreen;
-  margin: 20px;
-  padding: 10px;
+  margin-left: 60px;
 }
 
-#purchases-container {
-  border: 2px solid darkred;
-  margin: 20px;
-  padding: 10px;
+#list-actions label {
+  margin-right: 5px;
+}
+
+#filter-container div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
