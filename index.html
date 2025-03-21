@@ -11,21 +11,22 @@
       <h1>Financial Tracker</h1>
       <form id="enter-purchase-form">
         <div>
-          <label for="purchase-name">Purchase</label>
-          <input
-            type="text"
-            id="purchase-name"
-            name="purchase-name"
-            placeholder="shoes"
-            required
-          />
+          <label for="income-expense">Type of transaction</label>
+          <select id="income-expense" name="income-expense">
+            <option value="expense">Expense</option>
+            <option value="income">Income</option>
+          </select>
         </div>
         <div>
-          <label for="cost">Cost</label>
+          <label for="categories">Category</label>
+          <select id="categories" name="categories"></select>
+        </div>
+        <div>
+          <label for="amount">Amount</label>
           <input
             type="number"
-            id="cost"
-            name="cost"
+            id="amount"
+            name="amount"
             step="0.01"
             min="0.01"
             placeholder="0.01"
@@ -33,90 +34,37 @@
           />
         </div>
         <div>
-          <label for="purchase-date">Date</label>
-          <input type="date" id="purchase-date" name="purchase-date" required />
-        </div>
-        <div>
-          <label for="payment-method">Payment Method</label>
+          <label for="description">Description</label>
           <input
             type="text"
-            id="payment-method"
-            name="payment-method"
-            placeholder="cash"
-            required
+            id="description"
+            name="description"
+            placeholder="movie"
           />
         </div>
         <div id="form-btns">
-          <button type="button" id="clear-purchases-btn">Clear</button>
-          <button type="submit" id="submit-purchase-btn">Submit</button>
+          <button type="button" id="clear-transactions-btn">Clear</button>
+          <button type="submit" id="submit-transaction-btn">Submit</button>
         </div>
       </form>
     </nav>
-    <div id="list-actions">
-      <div id="sort-container">
-        <label for="sort-dropdown">Sort</label>
-        <select id="sort-dropdown" name="sort-dropdown">
-          <option value="">---</option>
-          <option value="name">Name: A-Z</option>
-          <option value="low-high">Price: Low-High</option>
-          <option value="high-low">Price: High-Low</option>
-          <option value="most-recent">Most Recent</option>
-          <option value="payment">Payment Method</option>
-        </select>
-      </div>
-      <div id="filter-container">
-        <div>
-          <label for="filter-dropdown">Filter</label>
-          <select id="filter-dropdown" name="filter-dropdown">
-            <option value="all">All</option>
-            <option value="payment-method">Payment Method</option>
-            <option value="cost-max">Maximum Cost</option>
-            <option value="cost-min">Minimum Cost</option>
-          </select>
-        </div>
-        <div>
-          <label for="choose-payment-method">Choose Payment Method</label>
-          <input
-            type="text"
-            id="choose-payment-method"
-            name="choose-payment-method"
-          />
-        </div>
-        <div>
-          <label for="choose-cost">Choose Cost</label>
-          <input
-            type="number"
-            id="choose-cost"
-            name="choose-cost"
-            step="0.01"
-            min="0.01"
-          />
-        </div>
-        <button type="button" id="filter-btn">Filter</button>
-      </div>
-      <div id="purchases-container">
-        <table id="purchase-table">
-          <thead>
-            <tr>
-              <th scope="col">Purchase</th>
-              <th scope="col">Cost</th>
-              <th scope="col">Date</th>
-              <th scope="col">Payment Method</th>
-            </tr>
-          </thead>
-          <tbody id="purchase-table-body"></tbody>
-          <tfoot>
-            <tr>
-              <th>
-                <button type="button" id="calculate-total-btn">
-                  Calculate Total Spent
-                </button>
-              </th>
-              <td id="total-cost"></td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
+    <div id="finances-display">
+      <div id="earnings"></div>
+      <div id="expenses"></div>
+      <div id="total-finances"></div>
+    </div>
+    <div id="transaction-list-container">
+      <table id="transaction-list">
+        <thead>
+          <tr>
+            <th scope="col">Category</th>
+            <th scope="col">Description</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Date</th>
+          </tr>
+        </thead>
+        <tbody id="transaction-list-body"></tbody>
+      </table>
     </div>
 
     <script src="script.js"></script>

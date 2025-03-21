@@ -1,219 +1,131 @@
 // Get elements from HTML
-const nameInput = document.getElementById("purchase-name");
-const costInput = document.getElementById("cost");
-const dateInput = document.getElementById("purchase-date");
-const paymentMethodInput = document.getElementById("payment-method");
-const clearPurchasesBtn = document.getElementById("clear-purchases-btn");
-const submitPurchaseBtn = document.getElementById("submit-purchase-btn");
-const sortDropdown = document.getElementById("sort-dropdown");
-const filterDropdown = document.getElementById("filter-dropdown");
-const choosePaymentMethodInput = document.getElementById(
-  "choose-payment-method"
-);
-const chooseCostInput = document.getElementById("choose-cost");
-const purchaseDisplay = document.getElementById("purchase-display");
-const totalCostDisplay = document.getElementById("total-cost");
-const calculateTotalBtn = document.getElementById("calculate-total-btn");
-const filterBtn = document.getElementById("filter-btn");
-const purchaseTableBody = document.getElementById("purchase-table-body");
+const descriptionInput = document.getElementById("description");
+const amountInput = document.getElementById("amount");
+const clearTransactionsBtn = document.getElementById("clear-transactions-btn");
+const submitTransactionBtn = document.getElementById("submit-transaction-btn");
+const transactionListBody = document.getElementById("transaction-list-body");
+const categoriesDropdown = document.getElementById("categories");
+const incomeOrExpense = document.getElementById("income-expense");
+const earningsDisplay = document.getElementById("earnings");
+const expensesDisplay = document.getElementById("expenses");
+const totalFinancesDisplay = document.getElementById("total-finances");
 
 // Initialize purchase array
-const purchaseArr = JSON.parse(localStorage.getItem("purchaseData")) || [];
-
-// Ensure there are no special characters in input
-const isValidInput = (str) => {
-  const regex = /[^0-9a-zA-Z\s]/g;
-  return !str.match(regex);
-};
-
-const isValidDate = (date) => {
-  const today = new Date();
-  return today.getTime() >= date.valueAsNumber;
-};
-
-const reformatDate = (str) => {
-  const dateArr = str.split("-");
-  const day = dateArr.pop();
-  const month = dateArr.pop();
-  const year = dateArr.pop();
-  const newDate = [month, day, year];
-  return newDate.join("-");
-};
+const transactionArr = JSON.parse(localStorage.getItem("purchaseData")) || [];
 
 // Ensure fields are populated
 const inputExists = (str) => {
   return str.length >= 1;
 };
 
-// Sorting methods
-const sortByName = (arr) => {
-  arr.sort((a, b) => {
-    return a.name < b.name ? -1 : 1 || 0;
-  });
+const calculateTotalFinances = () => {
+  let total = 0;
+  transactionArr.forEach(({ amount }) => (total += Number(amount)));
+  totalFinancesDisplay.innerHTML = `<h2>${
+    total > 0 ? "+" : "-"
+  }$${total.toFixed(2)}</h2>`;
 };
 
-const sortByCost = (arr, dir) => {
-  arr.sort((a, b) => {
-    if (dir === "low-high") {
-      return Number(a.cost) < Number(b.cost) ? -1 : 1 || 0;
-    } else {
-      return Number(a.cost) > Number(b.cost) ? -1 : 1 || 0;
+const calculateTotalEarnings = () => {
+  let total = 0;
+  transactionArr.forEach(({ amount }) => {
+    if (amount > 0) {
+      total += amount;
     }
   });
+  earningsDisplay.innerHTML = `<h2>+$${total.toFixed(2)}</h2>`;
 };
 
-const sortByDate = (arr) => {
-  arr.sort((a, b) => {
-    return a.dateAsNumber < b.dateAsNumber ? -1 : 1 || 0;
-  });
-};
-
-const sortByPaymentMethod = (arr) => {
-  arr.sort((a, b) => {
-    return a.paymentMethod < b.paymentMethod ? -1 : 1 || 0;
-  });
-};
-
-const sortPurchases = () => {
-  switch (sortDropdown.value) {
-    case "name":
-      sortByName(purchaseArr);
-      break;
-    case "low-high" || "high-low":
-      sortByCost(purchaseArr, sortDropdown.value);
-      break;
-    case "most-recent":
-      sortByDate(purchaseArr);
-      break;
-    case "payment":
-      sortByPaymentMethod(purchaseArr);
-      break;
-  }
-  updateDisplay();
-};
-
-const calculateTotalCost = () => {
+const calculateTotalExpenses = () => {
   let total = 0;
-  purchaseArr.forEach(({ cost }) => (total += Number(cost)));
-  totalCostDisplay.innerHTML = `<strong>Total Spent: $${total.toFixed(
-    2
-  )}</strong>`;
+  transactionArr.forEach(({ amount }) => {
+    if (amount < 0) {
+      total += amount;
+    }
+  });
+  expensesDisplay.innerHTML = `<h2>-$${Math.abs(total).toFixed(2)}</h2>`;
 };
 
-const addPurchase = () => {
-  if (!isValidInput(nameInput.value) || !inputExists(nameInput.value)) {
-    alert("Please enter a valid item");
-    return;
-  } else if (!inputExists(costInput.value)) {
-    alert("Please enter a cost");
-    return;
-  } else if (!inputExists(dateInput.value) || !isValidDate(dateInput)) {
-    alert("Please enter a valid date");
-    return;
-  } else if (
-    !isValidInput(paymentMethodInput.value) ||
-    !inputExists(paymentMethodInput.value)
-  ) {
-    alert("Please enter a valid payment method");
-    return;
+const populateCategoriesDropdown = () => {
+  let content = "";
+  if (incomeOrExpense.value === "expense") {
+    content = `<option value="Food">Food</option>
+            <option value="Activity">Activity</option>
+            <option value="Bills">Bills</option>
+            <option value="Subscriptions">Subscriptions</option>
+            <option value="Other">Other</option>`;
+  } else {
+    content = `<option value="Work">Work</option>
+              <option value="Gift">Gift</option>
+              <option value="Other">Other</option>`;
   }
-  const regex = /\s/g;
-  const newId = `${nameInput.value.replace(regex, "-")}-${
-    dateInput.valueAsNumber
-  }`;
-  const formattedDate = reformatDate(dateInput.value);
-  const newPurchase = {
-    id: dateInput.valueAsNumber,
-    name: nameInput.value,
-    cost: costInput.value,
-    date: formattedDate,
-    dateAsNumber: dateInput.valueAsNumber,
-    paymentMethod: paymentMethodInput.value,
+  categoriesDropdown.innerHTML = content;
+};
+
+const addTransaction = () => {
+  const date = new Date();
+  const today = date.toLocaleDateString();
+  const newId = Date.now();
+  const amountNumber =
+    incomeOrExpense.value === "income"
+      ? Number(amountInput.value)
+      : Number(amountInput.value) * -1;
+  const newTransaction = {
+    id: newId,
+    category: categoriesDropdown.value,
+    description: descriptionInput.value,
+    amount: amountNumber,
+    date: today,
   };
-  purchaseArr.push(newPurchase);
-  localStorage.setItem("purchaseData", JSON.stringify(purchaseArr));
-  updateDisplay();
-};
-
-const filterDisplay = (p) => {
-  let dataToDisplay;
-  switch (p) {
-    case "all":
-      dataToDisplay = [...purchaseArr];
-      break;
-    case "payment-method":
-      dataToDisplay = purchaseArr.filter(
-        ({ paymentMethod }) => paymentMethod === choosePaymentMethodInput.value
-      );
-      break;
-    case "cost-max":
-      dataToDisplay = purchaseArr.filter(
-        ({ cost }) => Number(cost) <= Number(chooseCostInput.value)
-      );
-      break;
-    case "cost-min":
-      dataToDisplay = purchaseArr.filter(
-        ({ cost }) => Number(cost) >= Number(chooseCostInput.value)
-      );
-      break;
-  }
-  return dataToDisplay;
-};
-
-const deletePurchase = (id) => {
-  console.log(id);
-  const purchaseToDelete = purchaseArr.findIndex((p) => p.id === id);
-  console.log(purchaseToDelete);
-  purchaseArr.splice(purchaseToDelete, 1);
-  localStorage.setItem("purchaseData", JSON.stringify(purchaseArr));
+  transactionArr.push(newTransaction);
+  localStorage.setItem("purchaseData", JSON.stringify(transactionArr));
   updateDisplay();
 };
 
 const updateDisplay = () => {
-  nameInput.value = "";
-  costInput.value = "";
-  dateInput.value = "";
-  paymentMethodInput.value = "";
-  totalCostDisplay.innerHTML = "";
-  purchaseTableBody.innerHTML = filterDisplay(filterDropdown.value)
+  descriptionInput.value = "";
+  amountInput.value = "";
+  transactionListBody.innerHTML = transactionArr
     .map((p) => {
       return `
               <tr>
-                <td>${p.name}</td>
-                <td>$${Number(p.cost).toFixed(2)}</td>
+                <td>${p.category}</td>
+                <td>${p.description}</td>
+                <td>${p.amount > 0 ? "+" : "-"}$${Math.abs(
+        Number(p.amount)
+      ).toFixed(2)}</td>
                 <td>${p.date}</td>
-                <td>${p.paymentMethod}</td>
               </tr>
           `;
     })
     .join("");
+  calculateTotalEarnings();
+  calculateTotalExpenses();
+  calculateTotalFinances();
 };
 
-const clearPurchases = () => {
-  chooseCostInput.value = "";
-  choosePaymentMethodInput.value = "";
-  purchaseArr.length = 0;
-  localStorage.setItem("purchaseData", JSON.stringify(purchaseArr));
+const clearTransactions = () => {
+  transactionArr.length = 0;
+  localStorage.setItem("purchaseData", JSON.stringify(transactionArr));
   updateDisplay();
 };
 
-if (purchaseArr.length) {
+if (transactionArr.length) {
   updateDisplay();
 }
 
 // Button event listeners
-sortDropdown.addEventListener("change", sortPurchases);
 
-filterBtn.addEventListener("click", updateDisplay);
+clearTransactionsBtn.addEventListener("click", clearTransactions);
 
-clearPurchasesBtn.addEventListener("click", clearPurchases);
+incomeOrExpense.addEventListener("change", populateCategoriesDropdown);
 
-calculateTotalBtn.addEventListener("click", calculateTotalCost);
+populateCategoriesDropdown();
+calculateTotalFinances();
+calculateTotalEarnings();
+calculateTotalExpenses();
 
-submitPurchaseBtn.addEventListener("click", (e) => {
+submitTransactionBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  addPurchase();
+  addTransaction();
 });
-
-// TODO: add section to track money earned
-// TODO: add functionality to calculate total money earned so far this month
