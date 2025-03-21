@@ -21,9 +21,9 @@ const inputExists = (str) => {
 const calculateTotalFinances = () => {
   let total = 0;
   transactionArr.forEach(({ amount }) => (total += Number(amount)));
-  totalFinancesDisplay.innerHTML = `<h2>${
-    total > 0 ? "+" : "-"
-  }$${total.toFixed(2)}</h2>`;
+  totalFinancesDisplay.innerHTML = `<h2 class="${
+    total >= 0 ? "good-money" : "bad-money"
+  }">${total >= 0 ? "+" : "-"}$${Math.abs(total).toFixed(2)}</h2>`;
 };
 
 const calculateTotalEarnings = () => {
@@ -33,7 +33,9 @@ const calculateTotalEarnings = () => {
       total += amount;
     }
   });
-  earningsDisplay.innerHTML = `<h2>+$${total.toFixed(2)}</h2>`;
+  earningsDisplay.innerHTML = `<h2 class="good-money">+$${total.toFixed(
+    2
+  )}</h2>`;
 };
 
 const calculateTotalExpenses = () => {
@@ -43,7 +45,9 @@ const calculateTotalExpenses = () => {
       total += amount;
     }
   });
-  expensesDisplay.innerHTML = `<h2>-$${Math.abs(total).toFixed(2)}</h2>`;
+  expensesDisplay.innerHTML = `<h2 class="bad-money">-$${Math.abs(
+    total
+  ).toFixed(2)}</h2>`;
 };
 
 const populateCategoriesDropdown = () => {
@@ -91,9 +95,9 @@ const updateDisplay = () => {
               <tr>
                 <td>${p.category}</td>
                 <td>${p.description}</td>
-                <td>${p.amount > 0 ? "+" : "-"}$${Math.abs(
-        Number(p.amount)
-      ).toFixed(2)}</td>
+                <td class="${p.amount > 0 ? "good-money" : "bad-money"}">${
+        p.amount > 0 ? "+" : "-"
+      }$${Math.abs(Number(p.amount)).toFixed(2)}</td>
                 <td>${p.date}</td>
               </tr>
           `;

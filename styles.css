@@ -64,17 +64,23 @@ h1 {
 }
 
 #finances-display div {
-  margin: 20px;
+  margin: 10px;
+}
+
+h2,
+h3 {
+  margin: 5px;
+  text-align: center;
 }
 
 /* Purchase list styles */
 
 #transaction-list-container {
-  border: 2px solid black;
   position: absolute;
   left: 400px;
   top: 150px;
   width: 1000px;
+  margin-bottom: 100px;
 }
 
 #transaction-list {
@@ -95,4 +101,12 @@ td {
 th {
   background-color: lightgray;
   border-bottom: 2px solid black;
+}
+
+.good-money {
+  color: green;
+}
+
+.bad-money {
+  color: red;
 }
