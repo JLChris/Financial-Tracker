@@ -1,5 +1,19 @@
+:root {
+  --main-background: #fefcfb;
+  --secondary-background: #1baad1;
+  --tertiary-background: #c7ecf8;
+  --text-main: #0a1128;
+  --text-secondary: #001f54;
+  --text-tertiary: #034078;
+}
+
 * {
   box-sizing: border-box;
+  font-family: "Ubuntu", "Helvetica", sans-serif;
+}
+
+body {
+  background-color: var(--main-background);
 }
 
 #sidebar {
@@ -11,20 +25,26 @@
   top: 0px;
   bottom: 0px;
 
-  background: #ffffff;
-  border-right: 1px solid #e0e0e0;
+  background: var(--main-background);
+  border-right: 1px solid var(--secondary-background);
+
+  color: var(--text-main);
 }
 
 h1 {
   margin: 10px;
   font-size: 32px;
   text-align: center;
+  color: var(--text-main);
 }
 
 /* Purchase form styles */
 
-#enter-purchase-form input {
+#enter-purchase-form input,
+select {
   width: 75%;
+  padding: 2px;
+  letter-spacing: 1px;
 }
 
 #enter-purchase-form label {
@@ -46,6 +66,8 @@ h1 {
   margin: 5px;
   padding: 5px;
   letter-spacing: 1px;
+  background-color: var(--secondary-background);
+  font-weight: bold;
 }
 
 #form-btns button:hover {
@@ -86,20 +108,25 @@ h3 {
 #transaction-list {
   padding: 0px;
   border-collapse: collapse;
-  border: 2px solid rgb(140 140 140);
+  border: 2px solid var(--secondary-background);
   width: 100%;
+  letter-spacing: 0.5px;
 }
 
 th,
 td {
   border: 1px solid rgb(160 160 160);
   text-align: center;
-  padding: 5px 0 5px 0;
+  padding: 6px 0 6px 0;
   width: 25%;
 }
 
+tr:nth-of-type(even) {
+  background-color: var(--tertiary-background);
+}
+
 th {
-  background-color: lightgray;
+  background-color: var(--secondary-background);
   border-bottom: 2px solid black;
 }
 
