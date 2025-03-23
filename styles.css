@@ -20,7 +20,8 @@ body {
   box-sizing: border-box;
 
   position: absolute;
-  width: 256px;
+  max-width: 20%;
+  min-width: 150px;
   left: 0px;
   top: 0px;
   bottom: 0px;
@@ -66,7 +67,7 @@ select {
   margin: 5px;
   padding: 5px;
   letter-spacing: 1px;
-  background-color: var(--secondary-background);
+  background-color: var(--tertiary-background);
   font-weight: bold;
 }
 
@@ -74,15 +75,17 @@ select {
   cursor: pointer;
   transform: translate(-1px, -1px);
   box-shadow: 1px 1px 1px gray;
+  background-color: var(--secondary-background);
 }
 
 #finances-display {
   position: absolute;
   border: 2px solid black;
-  left: 400px;
+  left: 25%;
   display: flex;
-  width: 1000px;
+  width: 60%;
   justify-content: space-between;
+  color: var(--text-main);
 }
 
 #finances-display div {
@@ -99,10 +102,11 @@ h3 {
 
 #transaction-list-container {
   position: absolute;
-  left: 400px;
+  left: 25%;
   top: 150px;
-  width: 1000px;
+  width: 60%;
   margin-bottom: 100px;
+  color: var(--text-main);
 }
 
 #transaction-list {
@@ -136,4 +140,35 @@ th {
 
 .bad-money {
   color: red;
+}
+
+@media (max-width: 850px) {
+  h1 {
+    font-size: 25px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  #finances-display {
+    left: 200px;
+  }
+
+  #transaction-list-container {
+    top: 120px;
+    font-size: 12px;
+    left: 200px;
+  }
+}
+
+@media (max-width: 650px) {
+  h2 {
+    font-size: 16px;
+  }
+
+  #finances-display,
+  #transaction-list-container {
+    left: 170px;
+  }
 }
