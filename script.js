@@ -1,6 +1,7 @@
 // Get elements from HTML
 const descriptionInput = document.getElementById("description");
 const amountInput = document.getElementById("amount");
+const dateInput = document.getElementById("date");
 const clearTransactionsBtn = document.getElementById("clear-transactions-btn");
 const submitTransactionBtn = document.getElementById("submit-transaction-btn");
 const transactionListBody = document.getElementById("transaction-list-body");
@@ -16,6 +17,29 @@ const transactionArr = JSON.parse(localStorage.getItem("purchaseData")) || [];
 // Ensure fields are populated
 const inputExists = (str) => {
   return str.length >= 1;
+};
+
+const checkInputs = () => {
+  let message;
+  if (!inputExists(amount.value)) {
+    message = "Please input an amount";
+  } else if (!inputExists(descriptionInput.value)) {
+    message = "Please input a description";
+  } else if (!inputExists(dateInput.value)) {
+    message = "Please input a date";
+  }
+  if (message) {
+    alert(message);
+  } else {
+    addTransaction();
+  }
+};
+
+const formatDate = (str) => {
+  const arr = str.split("-");
+  const [year, month, day] = arr;
+  const formatted = [month, day, year].join("/");
+  return formatted;
 };
 
 const calculateTotalFinances = () => {
@@ -67,8 +91,9 @@ const populateCategoriesDropdown = () => {
 };
 
 const addTransaction = () => {
-  const date = new Date();
-  const today = date.toLocaleDateString();
+  // const date = new Date();
+  const date = formatDate(dateInput.value);
+  // const today = date.toLocaleDateString();
   const newId = Date.now();
   const amountNumber =
     incomeOrExpense.value === "income"
@@ -79,7 +104,7 @@ const addTransaction = () => {
     category: categoriesDropdown.value,
     description: descriptionInput.value,
     amount: amountNumber,
-    date: today,
+    date: date,
   };
   transactionArr.push(newTransaction);
   localStorage.setItem("purchaseData", JSON.stringify(transactionArr));
@@ -131,5 +156,5 @@ calculateTotalExpenses();
 
 submitTransactionBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  addTransaction();
+  checkInputs();
 });
